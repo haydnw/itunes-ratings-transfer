@@ -14,3 +14,22 @@ to work with iTunes 12.2.0.145, so you may need to export an existing
 Playlist from iTunes and then manually edit the first few lines of
 XML to ensure that they match what iTunes currently generates. The
 file should import fine after that though.
+
+Output looks something like this:
+```bash
+MacBookPro:itunes-ratings-transfer MyName$ python update_ratings.py 
+Calculating...
+Found 10754 old tracks.
+Found 10725 old ratings.
+Found 9869  current tracks.
+Skipped 163 tracks.
+Rating: 0 stars - 1388 tracks
+Rating: 1 stars - 1119 tracks
+Rating: 2 stars - 2026 tracks
+Rating: 3 stars - 2692 tracks
+Rating: 4 stars - 2183 tracks
+Rating: 5 stars - 298  tracks
+Writing new playlist(s) to updated.xml...
+Finished!
+MacBookPro:itunes-ratings-transfer MyName$ 
+```

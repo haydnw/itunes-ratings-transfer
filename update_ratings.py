@@ -18,6 +18,8 @@ CURRENT_PREFIX = 'file:///Users/Haydn/Music/'
 
 
 def main():
+    print("Calculating...")
+
     # Read in the old tracks and grab the ratings.
     old = plistlib.readPlist(OLD)
     old_tracks = old['Tracks']
@@ -30,19 +32,17 @@ def main():
             filename = filename.replace(OLD_PREFIX2, '')
             filename = filename.replace(OLD_PREFIX3, '')
             filename = filename.replace(OLD_PREFIX4, '')
-            filename = filename.replace('haydn', 'Haydn')
-            #print filename
             rating = track.get('Rating')
             if rating is not None:
-                #print rating
+                # Rating is one to five
                 old_ratings[filename] = rating
             else:
+                # Rating is zero
                 old_ratings[filename] = 0
     print "Found " + str(len(old_ratings)).ljust(5) + " old ratings."
-    #print "The old ratings are:\n" + str(old_ratings)
 
-    # Same with the current ratings. If we've rated something, we want to
-    # keep that rating.
+    # Get the list of current tracks (we need to include their current
+    # iTunes ID number in the new playlists).
     current = plistlib.readPlist(CURRENT)
     current_tracks = current['Tracks']
     print "Found " + str(len(current_tracks)).ljust(5) + " current tracks."
@@ -52,24 +52,21 @@ def main():
     skipcount = 0
     for track in current_tracks.values():
         filename = track['Location'].replace(CURRENT_PREFIX, '')
-        filename = filename.replace('haydn', 'Haydn')
-        #print filename
         if filename in old_ratings:
             old_rating = old_ratings[filename]
             track_id = track['Track ID']
             if old_rating is not None:
+                # Rating is one to five
                 new_playlists[old_rating].append(track_id)
             else:
+                # Rating is zero
                 new_playlists[0].append(track_id)
         else:
             skipcount = skipcount + 1
-    print "Skipped " + str(skipcount).ljust(5) + " tracks."
+    print "Skipped " + str(skipcount).ljust(3) + " tracks."
 
-    # Create a playlist per rating. You can set the playlist's items to
-    # the correct rating in iTunes just fine.
+    # Actually create a playlist per rating from the dict.
     playlists = []
-    #new_playlists = sorted(new_playlists.keys())
-    #for rating, track_ids in new_playlists.items():
     for rating, track_ids in sorted(new_playlists.iteritems()):
         stars = rating / 20
         print "Rating: " + str(stars) + " stars - " + str(len(track_ids)).ljust(4) + " tracks"
@@ -83,9 +80,11 @@ def main():
         playlists.append(new_playlist)
 
     # Zap the existing ones, otherwise you end up with double items.
+    print("Writing new playlist(s) to " + NEW + "...")
     current['Playlists'] = playlists
     plistlib.writePlist(current, NEW)
 
+    print("Finished!")
 
 if __name__ == '__main__':
     main()
