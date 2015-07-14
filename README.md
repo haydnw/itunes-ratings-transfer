@@ -17,7 +17,7 @@ file should import fine after that though.
 
 Output looks something like this:
 ```bash
-MacBookPro:itunes-ratings-transfer MyName$ python update_ratings.py 
+MyName$ python update_ratings.py 
 Calculating...
 Found 10754 old tracks.
 Found 10725 old ratings.
@@ -31,5 +31,5 @@ Rating: 4 stars - 2183 tracks
 Rating: 5 stars - 298  tracks
 Writing new playlist(s) to updated.xml...
 Finished!
-MacBookPro:itunes-ratings-transfer MyName$ 
+MyName$ 
 ```
