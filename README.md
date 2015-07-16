@@ -2,6 +2,12 @@
 Transfer star ratings from an old iTunes Media Library to a new one
 (*i.e.* between XML files).
 
+This script takes an old iTunes XML library file, looks at ratings, and
+creates a new file containing separate playlists for all tracks at
+one star, two stars, three stars, etc. The new playlist file can
+then be imported into iTunes and used to rate the same tracks in the new
+library en masse.
+
 Originated from work [in a gist](https://gist.github.com/reinout/4410653)
 relating to a [blog post](http://reinout.vanrees.org/weblog/2012/12/30/restore-itunes-ratings.html)
 by [Reinout van Rees](http://reinout.vanrees.org).
